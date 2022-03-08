@@ -5,10 +5,7 @@ import org.apache.logging.log4j.Logger;
 import ru.silonov.accountant.api.DataProvider;
 import ru.silonov.accountant.model.AccountantEntity;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,10 +17,12 @@ public class AccountantRESTfulService {
     private static final DataProvider dataProvider = new DataProvider();
     private static final Logger logger = LogManager.getLogger(AccountantRESTfulService.class);
 
-    @Path("{task}/{developer}")
-    @GET
+
+
+    @Path("/add/{task}/{developer}")
+    @POST
     @Produces("application/xml")
-    public String getWeather_XML(@PathParam("task") String task,
+    public String getData(@PathParam("task") String task,
                                  @PathParam("developer") String developer) {
 
         AccountantEntity entity = new AccountantEntity(task, Long.parseLong(developer));
@@ -37,5 +36,29 @@ public class AccountantRESTfulService {
                 + "<task>" + entity.getTask() + "</task>"//
                 + "<developer>" + entity.getUserId() + "</developer>"//
                 + "</weather>";
-}
+    }
+
+    @POST
+    @Path("/get/{id}")
+    @Produces("application/xml")
+    public String postData(@PathParam("id") Long id){
+
+        AccountantEntity entity = dataProvider.getById(id).orElseThrow();
+
+        return "<Entity>"//
+                + "<ID>" + entity.getId() + "</ID>"//
+                + "<date>" + entity.getDate() + "</date>"//
+                + "<time>" + entity.getTime() + "</time>"//
+                + "<task>" + entity.getTask() + "</task>"//
+                + "<developer>" + entity.getUserId() + "</developer>"//
+                + "</weather>";
+    }
+
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces("application/xml")
+    public boolean updData(@PathParam("id") Long id){
+        AccountantEntity entity = new AccountantEntity();
+        return dataProvider.delete(id);
+    }
 }

@@ -56,6 +56,18 @@
       <version>1.19.4</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-servlet</artifactId>
+      <version>1.19.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>1.19.4</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core -->
     <dependency>
       <groupId>com.sun.jersey</groupId>
@@ -121,6 +133,11 @@
       <artifactId>junit-jupiter</artifactId>
       <version>RELEASE</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.5</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
