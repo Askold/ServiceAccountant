@@ -48,6 +48,8 @@ public class AccountantRESTfulService extends HttpServlet {
             throw new RuntimeException(Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
         AccountantEntity entity = new AccountantEntity(text, Integer.parseInt(time), Integer.parseInt(student));
         dataProvider.insert(entity);
+        String payload = gson.toJson(entity);
+        sendResponse(resp, payload);
     }
 
 //    @Override

@@ -11,6 +11,7 @@ import ru.silonov.accountant.model.AccountantEntity;
 import ru.silonov.accountant.util.HibernateUtil;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class DataProvider implements IDataProvider {
 
     private static final Logger logger = LogManager.getLogger(DataProvider.class);
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public AccountantEntity insert(AccountantEntity entity) {
@@ -85,7 +87,7 @@ public class DataProvider implements IDataProvider {
             transaction = session.beginTransaction();
             //String hql = "from AccountantEntity where ", new Date(System.currentTimeMillis());
             Query<AccountantEntity> query = session.createQuery("from AccountantEntity where date = :date", AccountantEntity.class);
-            query.setParameter("date", new Date(System.currentTimeMillis()));
+            query.setParameter("date", format.format(new Date(System.currentTimeMillis())));
             list = query.list();
             transaction.commit();
             logger.info(Constants.RECORDS_SELECTED);

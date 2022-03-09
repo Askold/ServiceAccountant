@@ -6,11 +6,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
+
 import ru.silonov.accountant.Constants;
 import ru.silonov.accountant.model.AccountantEntity;
 
@@ -19,7 +22,7 @@ public class HibernateUtil {
 
     public static SessionFactory getSessionFactory() {
         logger.info("start getSessionFactory()");
-        File file = new File(Constants.DEFAULT_HBN_CONFIG_PATH);
+        File file = new File(Constants.WEB_HBN_CONFIG_PATH);
         logger.debug("file name: " + file.getName());
         Configuration configuration = new Configuration().configure(file);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
@@ -27,7 +30,6 @@ public class HibernateUtil {
         MetadataSources metadataSources = new MetadataSources(serviceRegistry);
 
         metadataSources.addAnnotatedClass(AccountantEntity.class);
-
 
         SessionFactory sessionFactory = metadataSources.buildMetadata().buildSessionFactory();
         logger.info("end getSessionFactory()");

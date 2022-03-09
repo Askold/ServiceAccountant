@@ -2,20 +2,21 @@ package ru.silonov.accountant.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.Random;
 
 @Entity
 @Table(name = "accountant", schema = "public", catalog = "accountant")
 public class AccountantEntity {
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Id
     @Column(name = "id", nullable = false)
     private int id = (int) (System.currentTimeMillis());
     @Basic
     @Column(name = "report_date")
-    private Date date = new Date(System.currentTimeMillis()).;
+    private String date = format.format(new Date(System.currentTimeMillis()));
     @Basic
     @Column(name = "time_")
     private int time;
@@ -37,7 +38,7 @@ public class AccountantEntity {
     }
 
 
-    public AccountantEntity(int id, Date date, int time, String task, int userId) {
+    public AccountantEntity(int id, String date, int time, String task, int userId) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -57,11 +58,11 @@ public class AccountantEntity {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -11,6 +11,7 @@ public class Constants {
     public static final String DEFAULT_CONFIG_PATH ="./src/main/resources/environment.properties";
     public static final String DEFAULT_HBN_CFG = "def.hbn_cnf";
     public static final String DEFAULT_HBN_CONFIG_PATH = "src/main/resources/hibernate.cfg.xml";
+    public static final String WEB_HBN_CONFIG_PATH = "hibernate.cfg.xml";
 
     //---------------------------------CRUD
     public static final String RECORDS_ADDED = "All records were added";
