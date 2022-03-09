@@ -5,60 +5,50 @@ import org.apache.logging.log4j.Logger;
 import ru.silonov.accountant.api.DataProvider;
 import ru.silonov.accountant.model.AccountantEntity;
 
-import javax.ws.rs.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@Path("/accountant")
-public class AccountantRESTfulService {
+
+@WebServlet("/accountant")
+public class AccountantRESTfulService extends HttpServlet {
 
     private static final DataProvider dataProvider = new DataProvider();
     private static final Logger logger = LogManager.getLogger(AccountantRESTfulService.class);
 
+    static final long serialVersionUID = 1L;
 
 
-    @Path("/add/{task}/{developer}")
-    @POST
-    @Produces("application/xml")
-    public String getData(@PathParam("task") String task,
-                                 @PathParam("developer") String developer) {
-
-        AccountantEntity entity = new AccountantEntity(task, Long.parseLong(developer));
-        logger.info(entity);
-        dataProvider.insert(entity);
-
-        return "<Entity>"//
-                + "<ID>" + entity.getId() + "</ID>"//
-                + "<date>" + entity.getDate() + "</date>"//
-                + "<time>" + entity.getTime() + "</time>"//
-                + "<task>" + entity.getTask() + "</task>"//
-                + "<developer>" + entity.getUserId() + "</developer>"//
-                + "</weather>";
+    @Override
+    public void init() {
+        AccountantEntity accountant = new AccountantEntity();
     }
 
-    @POST
-    @Path("/get/{id}")
-    @Produces("application/xml")
-    public String postData(@PathParam("id") Long id){
-
-        AccountantEntity entity = dataProvider.getById(id).orElseThrow();
-
-        return "<Entity>"//
-                + "<ID>" + entity.getId() + "</ID>"//
-                + "<date>" + entity.getDate() + "</date>"//
-                + "<time>" + entity.getTime() + "</time>"//
-                + "<task>" + entity.getTask() + "</task>"//
-                + "<developer>" + entity.getUserId() + "</developer>"//
-                + "</weather>";
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
     }
 
-    @DELETE
-    @Path("/delete/{id}")
-    @Produces("application/xml")
-    public boolean updData(@PathParam("id") Long id){
-        AccountantEntity entity = new AccountantEntity();
-        return dataProvider.delete(id);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String param = req.getParameter("id");
+        Integer key = (param == null) ? null : Integer.valueOf(param.trim());
+        // удалять можно только по одной записи за раз
+        if (key == null) {
+            throw new RuntimeException(Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
+        }
+        try {
+            dataProvider.delete(key);
+        } catch (Exception e) {
+            throw new RuntimeException(Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
+        }
     }
 }

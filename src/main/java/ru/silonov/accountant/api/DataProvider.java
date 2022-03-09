@@ -38,7 +38,7 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public Optional<AccountantEntity> getById(long id) {
+    public Optional<AccountantEntity> getById(int id) {
         Transaction transaction = null;
         Optional<AccountantEntity> optional;
         try (Session session = getSession()) {
@@ -69,6 +69,9 @@ public class DataProvider implements IDataProvider {
         }
         catch (Exception e){
             logger.error(e.getClass()+e.getMessage());
+            if (transaction != null) {
+                transaction.rollback();
+            }
             return list;
         }
     }
@@ -92,7 +95,7 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
         Transaction transaction = null;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();

@@ -11,21 +11,23 @@ public class DataProviderTest {
 
 
 
-    @BeforeClass
-    public static void setUp() throws Exception {
-        entity = new AccountantEntity("Some task", System.currentTimeMillis());
-        System.out.println(entity);
-        dataProvider = new DataProvider();
-        entity = dataProvider.insert(entity);
-    }
+//    @BeforeClass
+//    public static void setUp() throws Exception {
+//        entity = new AccountantEntity("Some task", (int) System.currentTimeMillis());
+//        System.out.println(entity);
+//        dataProvider = new DataProvider();
+//        entity = dataProvider.insert(entity);
+//    }
+//
+//    @AfterClass
+//    public static void tearDown() throws Exception {
+//        dataProvider.delete(entity.getId());
+//    }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
-        dataProvider.delete(entity.getId());
-    }
+
     @Test
     public void getId() {
-        entity = new AccountantEntity("Some task", System.currentTimeMillis());
+        entity = new AccountantEntity("Some task",15, (int) System.currentTimeMillis());
         System.out.println(entity);
         entity = new DataProvider().insert(entity);
 
@@ -48,7 +50,7 @@ public class DataProviderTest {
         //When: Trying to receive all data from table
         List<AccountantEntity> stuffList = dataProvider.selectAll();
         //Then: Received and prepared lists should be equal
-        System.out.println(stuffList.get(0));
+        System.out.println(stuffList.get(0).getDate());
         Assert.assertNotNull(stuffList);
     }
 
@@ -62,4 +64,12 @@ public class DataProviderTest {
         Assert.assertEquals(dataProvider.getById(entity.getId()).orElseThrow(), entity);
     }
 
+    @Test
+    public void insert() {
+        dataProvider = new DataProvider();
+        for (int i =0; i < 10; i++){
+            entity = dataProvider.insert(new AccountantEntity("Some task",15 , (int) System.currentTimeMillis()));
+        }
+
+    }
 }

@@ -2,6 +2,7 @@ package ru.silonov.accountant.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Random;
 
 @Entity
@@ -10,36 +11,37 @@ public class AccountantEntity {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private long id = System.currentTimeMillis() + new Random().nextInt(10000);
+    private int id = (int) (System.currentTimeMillis());
     @Basic
-    @Column(name = "date_")
+    @Column(name = "report_date")
     private Date date = new Date(System.currentTimeMillis());
     @Basic
     @Column(name = "time_")
-    private String time = java.time.LocalDateTime.now().toLocalTime().toString();
+    private int time;
     @Basic
-    @Column(name = "task")
+    @Column(name = "report_text")
     private String task;
     @Basic
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "student_id")
+    private int userId;
 
-    public AccountantEntity(long id) {
+    public AccountantEntity(int id) {
     }
 
-    public AccountantEntity(String task, Long userId) {
+    public AccountantEntity(String task, int time, int userId) {
+        this.time = time;
         this.task = task;
         this.userId = userId;
     }
 
-//    public AccountantEntity(Date date, String time, String task, Long userId) {
+//    public AccountantEntity(Date date, String time, String task, int userId) {
 //        this.date = date;
 //        this.time = time;
 //        this.task = task;
 //        this.userId = userId;
 //    }
 
-    public AccountantEntity(long id, Date date, String time, String task, Long userId) {
+    public AccountantEntity(int id, Date date, int time, String task, int userId) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -51,11 +53,11 @@ public class AccountantEntity {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,11 +69,11 @@ public class AccountantEntity {
         this.date = date;
     }
 
-    public String getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -83,11 +85,11 @@ public class AccountantEntity {
         this.task = task;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -95,26 +97,13 @@ public class AccountantEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        AccountantEntity that = (AccountantEntity) o;
-
-        if (id != that.id) return false;
-        if (date != null ? !date.toString().equals(that.date.toString()) : that.date.toString() != null) return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
-        if (task != null ? !task.equals(that.task) : that.task != null) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-
-        return true;
+        AccountantEntity entity = (AccountantEntity) o;
+        return id == entity.id && userId == entity.userId && Objects.equals(date, entity.date) && Objects.equals(time, entity.time) && Objects.equals(task, entity.task);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
-        result = 31 * result + (task != null ? task.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        return result;
+        return Objects.hash(id, date, time, task, userId);
     }
 
     @Override

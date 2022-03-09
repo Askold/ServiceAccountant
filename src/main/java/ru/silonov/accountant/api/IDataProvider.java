@@ -24,7 +24,7 @@ public interface IDataProvider {
      * @param id raw identification (primary key)
      * @return Entity in Optional wrapper
      */
-    Optional<AccountantEntity> getById(long id);
+    Optional<AccountantEntity> getById(int id);
 
     /**
      * Used to select all raws from table
@@ -44,5 +44,5 @@ public interface IDataProvider {
      * @param id raw identification (primary key)
      * @return result of inserting
      */
-    boolean delete(long id);
+    boolean delete(int id);
 }

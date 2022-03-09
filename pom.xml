@@ -35,12 +35,6 @@
       <version>3.3.1</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-bundle -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-bundle</artifactId>
-      <version>1.19.4</version>
-    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.json/json -->
     <dependency>
@@ -49,31 +43,6 @@
       <version>20211205</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-server -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-server</artifactId>
-      <version>1.19.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-servlet</artifactId>
-      <version>1.19.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>1.19.4</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-core</artifactId>
-      <version>1.19.4</version>
-    </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
