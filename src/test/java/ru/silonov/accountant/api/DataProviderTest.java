@@ -1,5 +1,6 @@
 package ru.silonov.accountant.api;
 
+import com.google.gson.Gson;
 import org.junit.*;
 import ru.silonov.accountant.model.AccountantEntity;
 
@@ -71,5 +72,23 @@ public class DataProviderTest {
             entity = dataProvider.insert(new AccountantEntity("Some task",15 , (int) System.currentTimeMillis()));
         }
 
+
+
+    }
+
+    @Test
+    public void delete() {
+        dataProvider = new DataProvider();
+        System.out.println(dataProvider.selectAll());
+        dataProvider.delete(1854433074);
+        System.out.println(dataProvider.selectAll());
+    }
+
+    @Test
+    public void selectCurrent() {
+        dataProvider = new DataProvider();
+        List<AccountantEntity> list = dataProvider.selectCurrent();
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(list));
     }
 }

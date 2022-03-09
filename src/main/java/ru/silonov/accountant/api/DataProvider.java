@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.silonov.accountant.Constants;
 import ru.silonov.accountant.model.AccountantEntity;
 import ru.silonov.accountant.util.HibernateUtil;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +78,28 @@ public class DataProvider implements IDataProvider {
         }
     }
 
+    public List<AccountantEntity> selectCurrent(){
+        Transaction transaction = null;
+        List<AccountantEntity> list = new ArrayList<>();
+        try (Session session = getSession()) {
+            transaction = session.beginTransaction();
+            //String hql = "from AccountantEntity where ", new Date(System.currentTimeMillis());
+            Query<AccountantEntity> query = session.createQuery("from AccountantEntity where date = :date", AccountantEntity.class);
+            query.setParameter("date", new Date(System.currentTimeMillis()));
+            list = query.list();
+            transaction.commit();
+            logger.info(Constants.RECORDS_SELECTED);
+            return list;
+        }
+        catch (Exception e){
+            logger.error(e.getClass()+e.getMessage());
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return list;
+        }
+    }
+
     @Override
     public boolean update(AccountantEntity entity) {
         Transaction transaction = null;
@@ -111,6 +135,7 @@ public class DataProvider implements IDataProvider {
             return false;
         }
     }
+
 
     /**
      * Receives Session object via SessionFactory

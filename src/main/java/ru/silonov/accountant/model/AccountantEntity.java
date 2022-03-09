@@ -9,12 +9,13 @@ import java.util.Random;
 @Table(name = "accountant", schema = "public", catalog = "accountant")
 public class AccountantEntity {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "id", nullable = false)
     private int id = (int) (System.currentTimeMillis());
     @Basic
     @Column(name = "report_date")
-    private Date date = new Date(System.currentTimeMillis());
+    private Date date = new Date(System.currentTimeMillis()).;
     @Basic
     @Column(name = "time_")
     private int time;
@@ -26,6 +27,7 @@ public class AccountantEntity {
     private int userId;
 
     public AccountantEntity(int id) {
+        this.id = id;
     }
 
     public AccountantEntity(String task, int time, int userId) {
@@ -34,12 +36,6 @@ public class AccountantEntity {
         this.userId = userId;
     }
 
-//    public AccountantEntity(Date date, String time, String task, int userId) {
-//        this.date = date;
-//        this.time = time;
-//        this.task = task;
-//        this.userId = userId;
-//    }
 
     public AccountantEntity(int id, Date date, int time, String task, int userId) {
         this.id = id;
