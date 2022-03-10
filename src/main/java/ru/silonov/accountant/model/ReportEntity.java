@@ -4,11 +4,10 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
-import java.util.Random;
 
 @Entity
 @Table(name = "accountant", schema = "public", catalog = "accountant")
-public class AccountantEntity {
+public class ReportEntity {
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,18 +26,18 @@ public class AccountantEntity {
     @Column(name = "student_id")
     private int userId;
 
-    public AccountantEntity(int id) {
+    public ReportEntity(int id) {
         this.id = id;
     }
 
-    public AccountantEntity(String task, int time, int userId) {
+    public ReportEntity(String task, int time, int userId) {
         this.time = time;
         this.task = task;
         this.userId = userId;
     }
 
 
-    public AccountantEntity(int id, String date, int time, String task, int userId) {
+    public ReportEntity(int id, String date, int time, String task, int userId) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -46,7 +45,7 @@ public class AccountantEntity {
         this.userId = userId;
     }
 
-    public AccountantEntity() {
+    public ReportEntity() {
 
     }
 
@@ -94,7 +93,7 @@ public class AccountantEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountantEntity entity = (AccountantEntity) o;
+        ReportEntity entity = (ReportEntity) o;
         return id == entity.id && userId == entity.userId && Objects.equals(date, entity.date) && Objects.equals(time, entity.time) && Objects.equals(task, entity.task);
     }
 

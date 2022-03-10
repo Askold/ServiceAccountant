@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.silonov.accountant.Constants;
-import ru.silonov.accountant.model.AccountantEntity;
+import ru.silonov.accountant.model.ReportEntity;
 import ru.silonov.accountant.util.HibernateUtil;
 
 import java.sql.Date;
@@ -22,11 +22,11 @@ public class DataProvider implements IDataProvider {
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    public AccountantEntity insert(AccountantEntity entity) {
+    public ReportEntity insert(ReportEntity entity) {
         Transaction transaction = null;
         try (Session session = getSession()){
             transaction = session.beginTransaction();
-            entity = (AccountantEntity) session.merge(entity);
+            entity = (ReportEntity) session.merge(entity);
             transaction.commit();
             logger.info(entity.getClass().getSimpleName()+Constants.ADDED);
             return entity;
@@ -42,14 +42,14 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public Optional<AccountantEntity> getById(int id) {
+    public Optional<ReportEntity> getById(int id) {
         Transaction transaction = null;
-        Optional<AccountantEntity> optional;
+        Optional<ReportEntity> optional;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
-            optional = Optional.ofNullable(session.get(AccountantEntity.class, id));
+            optional = Optional.ofNullable(session.get(ReportEntity.class, id));
             transaction.commit();
-            logger.info(AccountantEntity.class.getSimpleName()+Constants.FOUND);
+            logger.info(ReportEntity.class.getSimpleName()+Constants.FOUND);
             return optional;
         } catch (Exception e){
             logger.error(e.getClass()+e.getMessage());
@@ -61,12 +61,12 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public List<AccountantEntity> selectAll() {
+    public List<ReportEntity> selectAll() {
         Transaction transaction = null;
-        List<AccountantEntity> list = new ArrayList<>();
+        List<ReportEntity> list = new ArrayList<>();
         try (Session session = getSession()){
             transaction = session.beginTransaction();
-            list = session.createQuery("from AccountantEntity ", AccountantEntity.class).list();
+            list = session.createQuery("from ReportEntity ", ReportEntity.class).list();
             transaction.commit();
             logger.info(Constants.RECORDS_SELECTED);
             return list;
@@ -80,13 +80,13 @@ public class DataProvider implements IDataProvider {
         }
     }
 
-    public List<AccountantEntity> selectCurrent(){
+    public List<ReportEntity> selectCurrent(){
         Transaction transaction = null;
-        List<AccountantEntity> list = new ArrayList<>();
+        List<ReportEntity> list = new ArrayList<>();
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
             //String hql = "from AccountantEntity where ", new Date(System.currentTimeMillis());
-            Query<AccountantEntity> query = session.createQuery("from AccountantEntity where date = :date", AccountantEntity.class);
+            Query<ReportEntity> query = session.createQuery("from ReportEntity where date = :date", ReportEntity.class);
             query.setParameter("date", format.format(new Date(System.currentTimeMillis())));
             list = query.list();
             transaction.commit();
@@ -103,7 +103,7 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public boolean update(AccountantEntity entity) {
+    public boolean update(ReportEntity entity) {
         Transaction transaction = null;
         try (Session session = getSession()){
             transaction = session.beginTransaction();
@@ -125,9 +125,9 @@ public class DataProvider implements IDataProvider {
         Transaction transaction = null;
         try (Session session = getSession()) {
             transaction = session.beginTransaction();
-            session.delete(new AccountantEntity(id));
+            session.delete(new ReportEntity(id));
             transaction.commit();
-            logger.info(AccountantEntity.class.getSimpleName()+id+Constants.DELETED);
+            logger.info(ReportEntity.class.getSimpleName()+id+Constants.DELETED);
             return true;
         } catch (Exception e){
             logger.error(e.getClass()+e.getMessage());

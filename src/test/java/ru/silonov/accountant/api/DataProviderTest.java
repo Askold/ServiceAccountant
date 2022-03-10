@@ -2,13 +2,13 @@ package ru.silonov.accountant.api;
 
 import com.google.gson.Gson;
 import org.junit.*;
-import ru.silonov.accountant.model.AccountantEntity;
+import ru.silonov.accountant.model.ReportEntity;
 
 import java.util.List;
 
 public class DataProviderTest {
     static DataProvider dataProvider;
-    static AccountantEntity entity;
+    static ReportEntity entity;
 
 
 
@@ -28,7 +28,7 @@ public class DataProviderTest {
 
     @Test
     public void getId() {
-        entity = new AccountantEntity("Some task",15, (int) System.currentTimeMillis());
+        entity = new ReportEntity("Some task",15, (int) System.currentTimeMillis());
         System.out.println(entity);
         entity = new DataProvider().insert(entity);
 
@@ -49,7 +49,7 @@ public class DataProviderTest {
     public void selectAll() {
         //Given: Prepared List of objects
         //When: Trying to receive all data from table
-        List<AccountantEntity> stuffList = dataProvider.selectAll();
+        List<ReportEntity> stuffList = dataProvider.selectAll();
         //Then: Received and prepared lists should be equal
         System.out.println(stuffList.get(0).getDate());
         Assert.assertNotNull(stuffList);
@@ -69,7 +69,7 @@ public class DataProviderTest {
     public void insert() {
         dataProvider = new DataProvider();
         for (int i =0; i < 10; i++){
-            entity = dataProvider.insert(new AccountantEntity("Some task",15 , (int) System.currentTimeMillis()));
+            entity = dataProvider.insert(new ReportEntity("Some task",15 , (int) System.currentTimeMillis()));
         }
 
 
@@ -87,7 +87,7 @@ public class DataProviderTest {
     @Test
     public void selectCurrent() {
         dataProvider = new DataProvider();
-        List<AccountantEntity> list = dataProvider.selectCurrent();
+        List<ReportEntity> list = dataProvider.selectCurrent();
         Gson gson = new Gson();
         System.out.println(gson.toJson(list));
     }

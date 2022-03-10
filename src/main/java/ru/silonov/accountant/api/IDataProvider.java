@@ -1,7 +1,7 @@
 package ru.silonov.accountant.api;
 
 
-import ru.silonov.accountant.model.AccountantEntity;
+import ru.silonov.accountant.model.ReportEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,27 +17,27 @@ public interface IDataProvider {
      * @param testEntity entity
      * @return inserted Entity
      */
-    AccountantEntity insert(AccountantEntity testEntity);
+    ReportEntity insert(ReportEntity testEntity);
 
     /**
      * Used to find ro by id and transfer it to entity
      * @param id raw identification (primary key)
      * @return Entity in Optional wrapper
      */
-    Optional<AccountantEntity> getById(int id);
+    Optional<ReportEntity> getById(int id);
 
     /**
      * Used to select all raws from table
      * @return List consist of Entities
      */
-    List<AccountantEntity> selectAll();
+    List<ReportEntity> selectAll();
 
     /**
      * Used to update raw in table
      * @param testEntity updated Entity
      * @return result of inserting
      */
-    boolean update(AccountantEntity testEntity);
+    boolean update(ReportEntity testEntity);
 
     /**
      * Used to delete a raw from table

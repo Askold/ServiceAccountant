@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>Servlet</servlet-name>
-    <servlet-class>ru.silonov.accountant.AccountantRESTfulService</servlet-class>
+    <servlet-class>ru.silonov.accountant.service.getDailyReports</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>

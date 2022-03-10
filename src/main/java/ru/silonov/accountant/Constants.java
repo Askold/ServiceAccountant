@@ -6,6 +6,9 @@ package ru.silonov.accountant;
  * @author Silonov Kirill
  */
 public class Constants {
+    //---------------------------------
+    private static final String REST_URI_POST = "http://localhost:8090/service_accountant_war/accountant";
+    private static final String RESPONSE_RECEIVED = "Received response";
     //---------------------------------Hibernate Util
     public static final String PROPERTIES_PATH = "properties";
     public static final String DEFAULT_CONFIG_PATH ="./src/main/resources/environment.properties";
