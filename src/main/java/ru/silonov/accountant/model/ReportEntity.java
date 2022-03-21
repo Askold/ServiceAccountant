@@ -36,6 +36,12 @@ public class ReportEntity {
         this.userId = userId;
     }
 
+    public ReportEntity(int time, String task, int userId) {
+        this.time = time;
+        this.task = task;
+        this.userId = userId;
+    }
+
 
     public ReportEntity(int id, String date, int time, String task, int userId) {
         this.id = id;
